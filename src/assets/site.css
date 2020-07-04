@@ -1,28 +1,32 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
     .note__card{
-        padding-left: 0vw;padding-right: 0vw; width: 250px; background-color: beige;
+        padding: 1vw;
+        border-radius: 1px;
     }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
     .note__card{
-        padding-left: 1vw;padding-right: 1vw; width: 350px;background-color: yellow;
+        padding: 2vw;
+        border-radius: 2px;
     }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
     .note__card{
-        padding-left: 10vw;padding-right: 10vw; width: 30vw;background-color: greenyellow;
+        ppadding: 3vw;
+        border-radius: 3px;
     }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
     .note__card{
-        padding-left: 20vw;padding-right: 20vw; width: 20vw;background-color: burlywood;
+        padding: 4vw;
+        border-radius: 5px;
     }
 }
 .flex__row--center{

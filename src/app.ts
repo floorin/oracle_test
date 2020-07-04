@@ -2,12 +2,12 @@ import { Component, Vue } from 'vue-property-decorator';
 import NewToDo from '@/components/NewToDo/NewToDo.vue';
 import NewNote from '@/components/NewNote/NewNote.vue';
 import MainPage from '@/components/MainPage/MainPage.vue';
-import notes from '@/store/notes';
-import todos from '@/store/todos';
-import iNote from '@/types/iNote';
-import iToDo from '@/types/iToDo';
+import notes from './store/notes';
+import todos from './store/todos';
+import iNote from './types/iNote';
+import iToDo from './types/iToDo';
 import {getModule} from 'vuex-module-decorators';
-import {appDataBase} from '@/myDatabase';
+import {appDataBase} from './myDatabase';
 
 @Component({components: {MainPage,NewToDo,NewNote}})
 export default class App extends Vue {
@@ -38,27 +38,35 @@ export default class App extends Vue {
         return this.storeTodos.dataToDos;
     }
 
-    public addedNewDocument(){
+    public addedNewDocument(is_todo_OR_is_note:string){
         this.isVisibleDialogNewDocument = false;
         this.currentDocumentComponent = '';
+        switch (is_todo_OR_is_note) {
+            case 'todo':  appDataBase.getToDos().then(list=>{
+                            if(list.length>0) {this.storeTodos.setToDos(list);}
+                        });
+                        break;
+            case 'note':  appDataBase.getNotes().then(presult=>{
+                            if(presult.length>0) {this.storeNotes.setNotes(presult);}
+                        });
+                break;
+        }
     }
 
     public loadDataFromDB(){
         const vueInst = this;
         const updateStoreWithToDosFromDB = new Promise(
             (resolve, reject) => {
-                appDataBase.getToDos().then(presult=>{
-                    console.log('%cupdateStoreWithToDosFromDB from app.ts with presult=%o', "color: red;font-size:16px;", presult)
-                    if(presult.length>0) {vueInst.storeTodos.setToDos(presult);}
+                appDataBase.getToDos().then(list=>{
+                    if(list.length>0) {vueInst.storeTodos.setToDos(list);}
                     resolve('success');
                 })
             });
 
         const updateStoreWithNotesFromDB = new Promise(
             (resolve, reject) => {
-                appDataBase.getNotes().then(presult=>{
-                    console.log('%cupdateStoreWithNotesFromDB from app.ts with presult=%o', "color: red;font-size:16px;", presult)
-                        if(presult.length>0) {vueInst.storeNotes.setNotes(presult);}
+                appDataBase.getNotes().then(list=>{
+                        if(list.length>0) {vueInst.storeNotes.setNotes(list);}
                         resolve('success');
                 })
             });

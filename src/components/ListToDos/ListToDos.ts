@@ -1,8 +1,8 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
-import params from '@/store/params';
-import iToDo from '@/types/iToDo';
-import {CONFIG_ENV} from '@/config';
+import params from '../../store/params';
+import iToDo from '../../types/iToDo';
+import {CONFIG_ENV} from '../../config';
 
 @Component({components: {}})
 export default class ListToDos extends Vue {

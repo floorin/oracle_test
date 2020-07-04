@@ -34,7 +34,7 @@
         </div>
 
         <div class="row flex__row--center q-pa-lg">
-            <q-btn color="black" label="Save" />
+            <q-btn color="black" label="Save" @click="saveNewToDo" />
         </div>
     </div>
 </template>

@@ -1,11 +1,11 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
-import params from '@/store/params';
+import params from '../../store/params';
 import ListToDos from '@/components/ListToDos/ListToDos.vue';
 import ListNotes from '@/components/ListNotes/ListNotes.vue';
-import {CONFIG_ENV} from '@/config';
-import iToDo from '@/types/iToDo';
-import iNote from '@/types/iNote';
+import {CONFIG_ENV} from '../../config';
+import iToDo from '../../types/iToDo';
+import iNote from '../../types/iNote';
 
 @Component({components: {ListToDos, ListNotes}})
 export default class MainPage extends Vue {

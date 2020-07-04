@@ -23,14 +23,14 @@
     "comment-format": [true],
     "align": [true],
     "variable-name": false,
-    "@typescript-eslint/camelcase": false,
+    "@typescript-eslint/camelcase": "off",
     "semicolon": false,
     "whitespace-before-colon": [false],
     "whitespace-after-colon": [false],
     "one-line": false,
     "max-line-length": [ false ],
     "arrow-parens": false,
-    "no-this-assignment": false,
+    "no-this-assignment": [true, {"allowed-names": ["vueInst"], "allow-destructuring": true}],
     "@typescript-eslint/no-this-alias": [
       "warning",
       {

@@ -1,7 +1,7 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
-import iNote from '@/types/iNote';
-import {CONFIG_ENV} from '@/config';
+import iNote from '../../types/iNote';
+import {CONFIG_ENV} from '../../config';
 
 @Component({components: {}})
 export default class Note extends Vue {

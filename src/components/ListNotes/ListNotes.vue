@@ -3,7 +3,7 @@
             :cols="{default: 4, 1000: 3, 700: 2, 400: 1}"
             :gutter="{default: '30px', 700: '15px'}"
     >
-        <div v-for="note in notes" :key="note.appid">
+        <div v-for="note in notes" :key="note.appid" class="note__card">
             <Note :note="note" />
         </div>
     </masonry>

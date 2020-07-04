@@ -1,6 +1,6 @@
 import {store} from './index';
 import {Module, VuexModule, Mutation, Action} from 'vuex-module-decorators';
-import iNote from '@/types/iNote';
+import iNote from '../types/iNote';
 
 @Module({ namespaced: true, dynamic: true, store, name: 'storeNotes'})
 export default class Notes extends VuexModule {
@@ -9,7 +9,7 @@ export default class Notes extends VuexModule {
     @Mutation
     public SET_NOTES(dataNotes: iNote[]) {
         console.log('dataNotes=%o',dataNotes)
-        this.dataNotes = Object.assign({}, dataNotes);
+        this.dataNotes = [ ...dataNotes ];
     }
     @Action
     public setNotes(dataNotes: iNote[]) {

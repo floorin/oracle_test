@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:style="{ color: fgColor, backgroundColor: bgColor, fontSize: fontSize + 'px' }" v-html="note.bodyHtml" />
+    <div class="note__card" v-bind:style="{ color: fgColor, backgroundColor: bgColor, fontSize: fontSize + 'px' }" v-html="note.bodyHtml" />
 </template>
 <script lang="ts" src="./Note.ts" />
 

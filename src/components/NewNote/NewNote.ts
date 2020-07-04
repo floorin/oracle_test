@@ -1,13 +1,13 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
-import params from '@/store/params';
-import iNote from '@/types/iNote';
-import {CONFIG_ENV} from '@/config';
-import {appDataBase} from '@/myDatabase';
+import params from '../../store/params';
+import iNote from '../../types/iNote';
+import {CONFIG_ENV} from '../../config';
+import {appDataBase} from '../../myDatabase';
 
 @Component({components: {}})
 export default class NewNote extends Vue {
-    @Prop() public onAddNewDocument!: ()=>void;
+    @Prop() public onAddNewDocument!: (is_todo_OR_is_note :string) => void;
     public storeParams = getModule(params);
     public myLocale: any;
     public myNote: iNote = {
@@ -22,15 +22,14 @@ export default class NewNote extends Vue {
         this.myLocale=CONFIG_ENV.myLocale;
     }
 
-    public get optionsStatusTodDo(): string[] {
-        return this.storeParams.optionsStatusToDo;
+    public SetBgColor(pcolor: string){
+        this.myNote.color = pcolor;
     }
 
     public saveNewNote(){
-        const vueInst = this;
         appDataBase.putNewNote(this.myNote).then(presult => {
             console.log('presult=%o',presult)
-            vueInst.onAddNewDocument();
+            this.onAddNewDocument('note');
         });
     }
 }
