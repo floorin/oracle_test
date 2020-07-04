@@ -1,29 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-page-container>
+      <MainPage :todos="myToDos" :notes="myNotes"/>
+      <q-page-sticky position="bottom-right" :offset="[18, 18]">
+        <q-fab
+                label-position="top"
+                external-label
+                color="purple"
+                icon="keyboard_arrow_left"
+                direction="left"
+                padding="xs"
+        >
+          <q-fab-action padding="5px" external-label label-position="top" color="primary" @click="openNewNote" icon="description" label="Note" />
+          <q-fab-action padding="5px" external-label label-position="top" color="orange" @click="openNewToDo" icon="alarm" label="ToDo" />
+        </q-fab>
+      </q-page-sticky>
+    </q-page-container>
+
+    <q-dialog v-model="isVisibleDialogNewDocument" position="bottom">
+      <q-card style="min-width: 70vw;"
+              v-bind:class="{ 'min-height__80': $q.platform.is.mobile, 'min-height__60': $q.platform.is.desktop }">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{titleDialogNewDocument}}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <component v-bind:is="currentDocumentComponent" :onAddNewDocument="addedNewDocument"></component>
+        </q-card-section>
+      </q-card>
+
+    </q-dialog>
+  </q-layout>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
-
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class App extends Vue {}
-</script>
+<script lang="ts" src="./app.ts" />
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
