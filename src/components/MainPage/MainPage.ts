@@ -14,6 +14,7 @@ export default class MainPage extends Vue {
     public storeParams = getModule(params);
     public myLocale: any;
     public tabDocuments = 'ToDos';
+    public textForSearch = '';
 
     constructor() {
         super();

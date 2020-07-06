@@ -9,7 +9,10 @@
                 color="purple"
                 icon="keyboard_arrow_left"
                 direction="left"
+                type="button"
                 padding="xs"
+                size="xl"
+                class="q-btn–fab-huge"
         >
           <q-fab-action padding="5px" external-label label-position="top" color="primary" @click="openNewNote" icon="description" label="Note" />
           <q-fab-action padding="5px" external-label label-position="top" color="orange" @click="openNewToDo" icon="alarm" label="ToDo" />
@@ -17,17 +20,19 @@
       </q-page-sticky>
     </q-page-container>
 
-    <q-dialog v-model="isVisibleDialogNewDocument" position="bottom">
+    <q-dialog v-model="isVisibleDialogNewDocument" position="bottom" >
       <q-card style="min-width: 70vw;"
               v-bind:class="{ 'min-height__80': $q.platform.is.mobile, 'min-height__60': $q.platform.is.desktop }">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{titleDialogNewDocument}}</div>
+          <div class="row">
+            <q-btn color="black" dense :label="'Save '+titleDialogNewDocument" @click.prevent="submitDocument" />
+          </div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
-          <component v-bind:is="currentDocumentComponent" :onAddNewDocument="addedNewDocument"></component>
+          <component v-bind:is="currentDocumentComponent" :onAddNewDocument="addedNewDocument" ref="form"></component>
         </q-card-section>
       </q-card>
 
@@ -38,4 +43,8 @@
 <script lang="ts" src="./app.ts" />
 
 <style>
+  .q-btn–fab-huge{
+    width:50px;
+    height:40px;
+  }
 </style>

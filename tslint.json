@@ -30,9 +30,9 @@
     "one-line": false,
     "max-line-length": [ false ],
     "arrow-parens": false,
-    "no-this-assignment": [true, {"allowed-names": ["vueInst"], "allow-destructuring": true}],
+    "no-this-assignment": [false, {"allowed-names": ["vueInst"], "allow-destructuring": true}],
     "@typescript-eslint/no-this-alias": [
-      "warning",
+      "false",
       {
         "allowDestructuring": true, // Allow `const { props, state } = this`; false by default
         "allowedNames": ["vueInst"] // Allow `const self = this`; `[]` by default

@@ -3,6 +3,7 @@
     .note__card{
         padding: 1vw;
         border-radius: 1px;
+        border: 2px solid black;
     }
 }
 
@@ -11,6 +12,7 @@
     .note__card{
         padding: 2vw;
         border-radius: 2px;
+        border: 2px solid red;
     }
 }
 
@@ -19,6 +21,7 @@
     .note__card{
         ppadding: 3vw;
         border-radius: 3px;
+        border: 2px solid blue;
     }
 }
 
@@ -27,12 +30,19 @@
     .note__card{
         padding: 4vw;
         border-radius: 5px;
+        border: 2px solid green;
     }
 }
 .flex__row--center{
-    display: flex;flex-direction: row;justify-content: center;width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width:100%;
 }
-
+.flex__column--reverse{
+    display: flex;
+    flex-direction: column-reverse
+}
 .min-height__60{
     min-height:60vh;
 }

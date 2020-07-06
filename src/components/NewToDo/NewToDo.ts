@@ -1,4 +1,4 @@
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue } from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
 import params from '../../store/params';
 import iToDo from '../../types/iToDo';
@@ -7,8 +7,9 @@ import {appDataBase} from '../../myDatabase';
 
 @Component({components: {}})
 export default class NewToDo extends Vue {
-    @Prop() public onAddNewDocument!: (is_todo_OR_is_note :string) => void;
+    @Prop() public onAddNewDocument!: (documentType: string) => void;
     public storeParams = getModule(params);
+    public $refs: any;
     public myLocale: any;
     public myToDO: iToDo = {
         appid: 0,
@@ -26,11 +27,27 @@ export default class NewToDo extends Vue {
         return this.storeParams.optionsStatusToDo;
     }
 
-    public saveNewToDo(){
-    const vueInst = this;
-    appDataBase.putNewToDo(this.myToDO).then(presult => {
-    console.log('presult=%o',presult)
-    vueInst.onAddNewDocument('todo');
+    public submitDocument(){
+        this.$refs.myForm.validate().then((success: boolean) => {
+            if (success) {
+                this.saveToDoDocument();
+            }
+        })
+    }
+
+    public saveToDoDocument() {
+        appDataBase.putNewToDo(this.myToDO).then(presult => {
+            this.onAddNewDocument('todo');
+        }).catch(err =>{
+            const msgErrorOnSave=err.message || 'Document could not be saved!';
+            this.$q.notify({
+                color: 'red',
+                textColor: 'white',
+                type: 'positive',
+                message: msgErrorOnSave,
+                position: 'top',
+                timeout: 3000,
+            });
         });
     }
 }

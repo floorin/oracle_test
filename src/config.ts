@@ -7,6 +7,6 @@ export const CONFIG_ENV = {
         monthsShort: 'Ian_Feb_Mar_Apr_Mai_Iun_Iul_Aug_Sep_Oct_Nov_Dec'.split('_'),
         firstDayOfWeek: 1
     },
-    defaultNoteColor:'yellow'
-
+    defaultNoteColor:'white',
+    defaultNoteFontSize:'1em'
 }

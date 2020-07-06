@@ -15,6 +15,7 @@ export default class App extends Vue {
     public loadingData =true;
     public titleDialogNewDocument = '';
     public currentDocumentComponent = '';
+    public $refs: any;
     public storeNotes = getModule(notes);
     public storeTodos = getModule(todos);
 
@@ -38,10 +39,22 @@ export default class App extends Vue {
         return this.storeTodos.dataToDos;
     }
 
-    public addedNewDocument(is_todo_OR_is_note:string){
+    public submitDocument(){
+        this.$refs.form.submitDocument();
+    }
+
+    public addedNewDocument(documentType: string){
         this.isVisibleDialogNewDocument = false;
         this.currentDocumentComponent = '';
-        switch (is_todo_OR_is_note) {
+        this.$q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            type: 'positive',
+            message: 'Document was inserted!',
+            position: 'top',
+            timeout: 1000,
+        });
+        switch (documentType) {
             case 'todo':  appDataBase.getToDos().then(list=>{
                             if(list.length>0) {this.storeTodos.setToDos(list);}
                         });

@@ -1,30 +1,81 @@
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue } from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
 import params from '../../store/params';
 import iToDo from '../../types/iToDo';
+import DialogChangeStatus from '../DialogChangeStatus/DialogChangeStatus.vue';
 import {CONFIG_ENV} from '../../config';
 
-@Component({components: {}})
+@Component({components: {DialogChangeStatus}})
 export default class ListToDos extends Vue {
     @Prop({ default: [] }) public readonly todos!: iToDo[];
+    @Prop({ default: [] }) public readonly textForSearch!: string;
     public storeParams = getModule(params);
-    public filter = '';
-    public loadingData= false;
+    public all = true;
+    public loadingData = false;
+    public onlyCompleted = false;
+    public onlyPending = false;
+    public visibleDialogChangeStatus = false;
     public myLocale: any;
-    public visibleColumns: string[] = [ 'title', 'status', 'deadline'];
+    public selectedToDo: iToDo;
+    public visibleColumns: string[] = [ 'appid', 'title', 'status', 'deadline'];
     public  columns: any = [
         { name: 'appid', label: '', field: 'appid', align: 'center',  classes: 'bg-grey-1', style: 'max-width: 30px',headerStyle: 'max-width: 30px' },
         { name: 'title', label: 'Task', field: 'title', align: 'left', sortable: true, classes: 'bg-grey-1'},
         { name: 'status', label: 'Status', field: 'status', align: 'left', sortable: true , classes: 'bg-grey-1' },
-        { name: 'deadline', label: 'Due data', field: 'deadline', align: 'left', sortable: true }
+        { name: 'deadline', label: 'Due date', field: 'deadline', align: 'left', sortable: true }
     ];
 
     constructor() {
         super();
         this.myLocale=CONFIG_ENV.myLocale;
+        this.selectedToDo={
+            appid: 0,
+            title: '',
+            status: '',
+            deadline: ''
+        }
     }
 
     public get optionsStatusTodDo(): string[] {
         return this.storeParams.optionsStatusToDo;
+    }
+
+    public get filteredToDos(): iToDo[]{
+        let filteredToDos = [ ...this.todos];
+        if(this.textForSearch.length !== 0 ){
+            filteredToDos = this.todos.filter(todo => {
+                return todo.title.toLowerCase().indexOf(this.textForSearch.toLowerCase())>=0
+            })
+        }
+        return filteredToDos.filter(todos=>{
+               const statusFiltered = (this.onlyCompleted?'completed':'') || (this.onlyPending?'pending':'');
+               return (statusFiltered?todos.status==statusFiltered:true);
+        })
+    }
+
+    public showAll(clickedShowAll: boolean){
+        if(clickedShowAll){
+            this.onlyPending=false;
+            this.onlyCompleted=false;
+        }
+    }
+
+    public showOnlyCompleted(clickedShowCompleted: boolean){
+        if(clickedShowCompleted){
+            this.all=false;
+            this.onlyPending=false;
+        }
+    }
+
+    public showOnlyPending(clickedShowPending: boolean){
+        if(clickedShowPending){
+            this.all=false;
+            this.onlyCompleted=false;
+        }
+    }
+
+    public openDialogChangeStatus(todo: iToDo){
+        this.selectedToDo = todo;
+        this.visibleDialogChangeStatus = true;
     }
 }

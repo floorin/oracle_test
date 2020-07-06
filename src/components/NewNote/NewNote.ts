@@ -7,8 +7,9 @@ import {appDataBase} from '../../myDatabase';
 
 @Component({components: {}})
 export default class NewNote extends Vue {
-    @Prop() public onAddNewDocument!: (is_todo_OR_is_note :string) => void;
+    @Prop() public onAddNewDocument!: (documentType: string) => void;
     public storeParams = getModule(params);
+    public $refs: any;
     public myLocale: any;
     public myNote: iNote = {
         appid: 0,
@@ -26,10 +27,52 @@ export default class NewNote extends Vue {
         this.myNote.color = pcolor;
     }
 
-    public saveNewNote(){
-        appDataBase.putNewNote(this.myNote).then(presult => {
-            console.log('presult=%o',presult)
-            this.onAddNewDocument('note');
-        });
+    public pasteCapture(evt: any) {
+        let text = '';
+        let onPasteStripFormattingIEPaste = true;
+        const clipboardData = (window as any).clipboardData;
+        evt.preventDefault()
+        if (evt.originalEvent && evt.originalEvent.clipboardData.getData) {
+            text = evt.originalEvent.clipboardData.getData('text/plain')
+            this.$refs.editor_ref.runCmd('insertText', text)
+        }
+        else if (evt.clipboardData && evt.clipboardData.getData) {
+            text = evt.clipboardData.getData('text/plain')
+            this.$refs.editor_ref.runCmd('insertText', text)
+        }
+        else if ( clipboardData && clipboardData.getData) {
+            if (!onPasteStripFormattingIEPaste) {
+                onPasteStripFormattingIEPaste = true
+                this.$refs.editor_ref.runCmd('ms-pasteTextOnly', text)
+            }
+            onPasteStripFormattingIEPaste = false
+        }
+    }
+
+    public submitDocument(){
+        if(this.myNote.bodyHtml.length==0){
+            this.$q.notify({
+                color: 'red',
+                textColor: 'white',
+                type: 'positive',
+                message: 'Empty document could not be saved!',
+                position: 'top',
+                timeout: 3000,
+            });
+        }else {
+            appDataBase.putNewNote(this.myNote).then(presult => {
+                this.onAddNewDocument('note');
+            }).catch(err => {
+                const msgErrorOnSave = err.message || 'Document could not be saved!';
+                this.$q.notify({
+                    color: 'red',
+                    textColor: 'white',
+                    type: 'positive',
+                    message: msgErrorOnSave,
+                    position: 'top',
+                    timeout: 3000,
+                });
+            });
+        }
     }
 }
