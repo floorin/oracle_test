@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <MainPage :todos="myToDos" :notes="myNotes"/>
+      <MainPage :todos="myToDos" :notes="myNotes" />
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-fab
                 label-position="top"
@@ -11,11 +11,10 @@
                 direction="left"
                 type="button"
                 padding="xs"
-                size="xl"
                 class="q-btn–fab-huge"
         >
-          <q-fab-action padding="5px" external-label label-position="top" color="primary" @click="openNewNote" icon="description" label="Note" />
-          <q-fab-action padding="5px" external-label label-position="top" color="orange" @click="openNewToDo" icon="alarm" label="ToDo" />
+          <q-fab-action padding="14px" external-label label-position="top" color="primary" @click="openNewNote" icon="description" label="new Note" />
+          <q-fab-action padding="14px" external-label label-position="top" color="orange" @click="openNewToDo" icon="alarm" label="new ToDo" />
         </q-fab>
       </q-page-sticky>
     </q-page-container>
@@ -44,7 +43,7 @@
 
 <style>
   .q-btn–fab-huge{
-    width:50px;
-    height:40px;
+    width:65px;
+    height:55px;
   }
 </style>

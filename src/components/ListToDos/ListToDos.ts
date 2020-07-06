@@ -1,33 +1,33 @@
-import {Component, Prop, Vue } from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators';
 import params from '../../store/params';
 import iToDo from '../../types/iToDo';
 import DialogChangeStatus from '../DialogChangeStatus/DialogChangeStatus.vue';
-import {CONFIG_ENV} from '../../config';
 
 @Component({components: {DialogChangeStatus}})
 export default class ListToDos extends Vue {
     @Prop({ default: [] }) public readonly todos!: iToDo[];
     @Prop({ default: [] }) public readonly textForSearch!: string;
     public storeParams = getModule(params);
+    public $refs: any;
+    public pagination: any =  {
+        rowsPerPage: 0
+    };
     public all = true;
-    public loadingData = false;
     public onlyCompleted = false;
     public onlyPending = false;
     public visibleDialogChangeStatus = false;
-    public myLocale: any;
     public selectedToDo: iToDo;
     public visibleColumns: string[] = [ 'appid', 'title', 'status', 'deadline'];
     public  columns: any = [
         { name: 'appid', label: '', field: 'appid', align: 'center',  classes: 'bg-grey-1', style: 'max-width: 30px',headerStyle: 'max-width: 30px' },
         { name: 'title', label: 'Task', field: 'title', align: 'left', sortable: true, classes: 'bg-grey-1'},
         { name: 'status', label: 'Status', field: 'status', align: 'left', sortable: true , classes: 'bg-grey-1' },
-        { name: 'deadline', label: 'Due date', field: 'deadline', align: 'left', sortable: true }
+        { name: 'deadline', label: 'Due date', field: 'deadline', align: 'left', sortable: true, classes: 'bg-grey-1' }
     ];
 
     constructor() {
         super();
-        this.myLocale=CONFIG_ENV.myLocale;
         this.selectedToDo={
             appid: 0,
             title: '',
@@ -77,5 +77,17 @@ export default class ListToDos extends Vue {
     public openDialogChangeStatus(todo: iToDo){
         this.selectedToDo = todo;
         this.visibleDialogChangeStatus = true;
+    }
+
+    public get NrOfToDos(): number{
+        return this.todos.length;
+    }
+
+   @Watch('NrOfToDos')
+    public onNrOfToDosChanged(newVal: number, oldVal: number) {
+        try{this.$refs.table.scrollTo(newVal-2);}
+        catch (e) {
+            console.log(' ');
+        }
     }
 }

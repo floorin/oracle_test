@@ -21,7 +21,6 @@ export const appDataBase = (() => {
         const notes = await db.notes.orderBy('appid').toArray();
         const list: iNote[] = [];
         notes.forEach((item: iNote) => {
-            console.log('cycle notes for item=%o',item)
             list.push({
                 appid: item.appid,
                 bodyHtml: item.bodyHtml,

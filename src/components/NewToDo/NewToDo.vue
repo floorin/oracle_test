@@ -11,6 +11,7 @@
                     label="Title"
                     v-model="myToDO.title"
                     maxlength="100"
+                    counter
                     lazy-rules
                     dense
                     :input-style="{ fontFamily: 'Nunito Sans',fontWeight: 'bolder' }"
@@ -51,10 +52,5 @@
 <script lang="ts" src="./NewToDo.ts" />
 
 <style scoped>
-    .div__save{
-        display: flex;
-        justify-content: flex-end;
-        width:100%;
-        padding-right: 15px;
-    }
+
 </style>

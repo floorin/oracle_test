@@ -3,7 +3,6 @@ import {getModule} from 'vuex-module-decorators';
 import params from '../../store/params';
 import todos from '../../store/todos';
 import iToDo from '../../types/iToDo';
-import {CONFIG_ENV} from '../../config';
 import {appDataBase} from '../../myDatabase';
 
 @Component({components: {}})
@@ -16,13 +15,11 @@ export default class DialogChangeStatus extends Vue {
     public storeToDos = getModule(todos);
 
     public get optionsStatusTodDo(): string[] {
-        return this.storeParams.optionsStatusToDo.filter(option=>{ return option != this.todo.status; });
+        return this.storeParams.optionsStatusToDo.filter(option =>  option != this.todo.status );
     }
 
     public setNewStatus(pNewStatusValue: string){
-        console.log('set pNewStatusValue=%o',pNewStatusValue)
         appDataBase.changeStatusToDo(this.todo.appid,pNewStatusValue).then(presult=>{
-            console.log('appDataBase.changeStatusToDo with presult=%o',presult)
             this.storeToDos.changeStatus({appid: this.todo.appid, newStatus: pNewStatusValue});
         })
     }
@@ -32,7 +29,6 @@ export default class DialogChangeStatus extends Vue {
      */
     public created(){
         setTimeout(() => { this.loadingToDo = false; }, 500);
-        console.log('created DialogChangeStatus with todo=%o',this.todo)
     }
 
 }

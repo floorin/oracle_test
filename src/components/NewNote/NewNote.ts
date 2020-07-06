@@ -1,6 +1,4 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-import {getModule} from 'vuex-module-decorators';
-import params from '../../store/params';
 import iNote from '../../types/iNote';
 import {CONFIG_ENV} from '../../config';
 import {appDataBase} from '../../myDatabase';
@@ -8,7 +6,6 @@ import {appDataBase} from '../../myDatabase';
 @Component({components: {}})
 export default class NewNote extends Vue {
     @Prop() public onAddNewDocument!: (documentType: string) => void;
-    public storeParams = getModule(params);
     public $refs: any;
     public myLocale: any;
     public myNote: iNote = {

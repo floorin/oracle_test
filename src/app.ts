@@ -9,6 +9,7 @@ import iToDo from './types/iToDo';
 import {getModule} from 'vuex-module-decorators';
 import {appDataBase} from './myDatabase';
 
+
 @Component({components: {MainPage,NewToDo,NewNote}})
 export default class App extends Vue {
     public isVisibleDialogNewDocument = false;
@@ -85,7 +86,6 @@ export default class App extends Vue {
             });
         Promise.all([updateStoreWithToDosFromDB, updateStoreWithNotesFromDB])
             .then(result => {
-                console.log('Promise.all cu succes!');
                 vueInst.loadingData = false;
             })
             .catch(error => console.log(`Error in executing loadDataFromDB ${error}`))

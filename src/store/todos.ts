@@ -12,7 +12,6 @@ export default class Todos extends VuexModule {
 
     @Mutation
     public SET_TODOS(dataToDos: iToDo[]) {
-        console.log('dataToDos=%o',dataToDos)
         this.dataToDos = [ ...dataToDos ];
     }
     @Action

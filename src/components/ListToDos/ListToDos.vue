@@ -3,13 +3,15 @@
         <q-table v-if="$q.platform.is.mobile"
                 dense
                 grid
-                :rows-per-page-options="[0]"
                 hide-bottom
                 :data="filteredToDos"
                 :columns="columns"
                 :visible-columns="visibleColumns"
                 row-key="appid"
-                :loading="loadingData"
+                 virtual-scroll
+                 :pagination.sync="pagination"
+                 :rows-per-page-options="[0]"
+                 ref="table"
         >
 
             <template v-slot:top >
@@ -35,21 +37,24 @@
         <q-table
                 v-else
                 dense
-                style="height: 70vh"
+                style="height: calc(100vh - 220px)"
                 :rows-per-page-options="[0]"
                 hide-bottom
                 :data="filteredToDos"
                 :columns="columns"
                 :visible-columns="visibleColumns"
                 row-key="appid"
-                :loading="loadingData"
+                ref="table"
         >
 
             <template v-slot:top >
-                <q-toggle v-model="all" label="Show all" @input="showAll" />
+                <q-toggle v-model="all" label="Show all" @input="showAll"/>
                 <q-toggle v-model="onlyCompleted" label="Show only completed" @input="showOnlyCompleted" />
                 <q-toggle v-model="onlyPending" label="Show only pending"  @input="showOnlyPending" />
             </template>
+            <q-tr>
+                <div id="top_element">xxx</div>
+            </q-tr>
             <template v-slot:body="props">
                 <q-tr :props="props">
                     <q-td key="appid" :props="props">
@@ -73,13 +78,27 @@
                     </q-td>
                 </q-tr>
             </template>
+            <template v-slot:bottom-row>
+                <q-tr>
+                    <q-td colspan="100%">
+                        <div>&nbsp;</div>
+                    </q-td>
+                </q-tr>
+            </template>
         </q-table>
-
         <q-dialog v-model="visibleDialogChangeStatus" position="left">
             <q-card style="width: 90vw">
                 <DialogChangeStatus :todo="selectedToDo" />
             </q-card>
         </q-dialog>
+
+        <div v-if="todos.length==0 ">
+            To create a new task, use the purple button on the bottom right!
+        </div>
+
+        <div v-if="todos.length>0 && filteredToDos.length==0 && (textForSearch.length>0 || !onlyCompleted || !onlyPending)" class="flex__row--center">
+            <span class="text-body1">No documents for this filter!</span>
+        </div>
     </div>
 </template>
 

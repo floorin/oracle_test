@@ -1,20 +1,21 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-import {getModule} from 'vuex-module-decorators';
-import params from '../../store/params';
 import iNote from '../../types/iNote';
 import Note from '@/components/Note/Note.vue';
+import { scroll } from 'quasar';
+const { getScrollTarget, setScrollPosition } = scroll;
 
 @Component({components: {Note}})
 export default class ListNotes extends Vue {
     @Prop({ default: [] }) public readonly notes!: iNote[];
     @Prop({ default: [] }) public readonly textForSearch!: string;
-    public storeParams = getModule(params);
-    public $els: any;
     public filter = '';
-    public loadingData= false;
 
-    constructor() {
-        super();
+    public scrollDown(){
+        const el: HTMLElement = document.getElementById('bottom_element_for_scrolling')!;
+        const target = getScrollTarget(el)
+        const offset = el.offsetTop
+        const duration = 300;
+        setScrollPosition(target, offset, duration);
     }
 
     public get filteredNotes(): iNote[] {
@@ -28,8 +29,15 @@ export default class ListNotes extends Vue {
         }
     }
 
-    public deleteNote(appid: number){
-        console.log('deleteNote appid=%o',appid)
+    public get NrOfNotes(): number{
+        return this.notes.length;
     }
 
+    @Watch('NrOfNotes')
+    public onNrOfNotes(newVal: number, oldVal: number) {
+        try{this.scrollDown();}
+        catch (e) {
+            console.log(' ');
+        }
+    }
 }

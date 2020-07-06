@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="height: calc(100vh - 220px)">
     <masonry
             :cols="{default: 4, 1000: 3, 700: 2, 400: 1}"
             :gutter="{default: '30px', 700: '15px'}"
@@ -8,9 +8,13 @@
             <Note :note="note"/>
         </div>
     </masonry>
-    <div v-if="filteredNotes.length==0" class="flex__row--center">
-        <span class="text-body1">No document found<span v-if="textForSearch.length>0">, but there is a filter</span>!</span>
+    <div v-if="notes.length==0 ">
+        To create a new document, use the purple button on the bottom right!
     </div>
+    <div v-if="notes.length>0 && textForSearch.length>0 && filteredNotes.length==0" class="flex__row--center">
+        <span class="text-body1">No documents for this filter!</span>
+    </div>
+    <div id="bottom_element_for_scrolling"></div>
 </div>
 </template>
 

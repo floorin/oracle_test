@@ -30,14 +30,9 @@
     "one-line": false,
     "max-line-length": [ false ],
     "arrow-parens": false,
-    "no-this-assignment": [false, {"allowed-names": ["vueInst"], "allow-destructuring": true}],
-    "@typescript-eslint/no-this-alias": [
-      "false",
-      {
-        "allowDestructuring": true, // Allow `const { props, state } = this`; false by default
-        "allowedNames": ["vueInst"] // Allow `const self = this`; `[]` by default
-      }
-    ],
+    "no-this-alias": "false",
+    "@typescript-eslint/no-this-alias": "off" ,
+    "@typescript-eslint/no-this-assignment": "off",
     "whitespace": [
       false
     ],
