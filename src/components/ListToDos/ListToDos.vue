@@ -18,6 +18,12 @@
                 <q-toggle v-model="all" label="Show all" @input="showAll" />
                 <q-toggle v-model="onlyCompleted" label="Show only completed" @input="showOnlyCompleted" />
                 <q-toggle v-model="onlyPending" label="Show only pending"  @input="showOnlyPending" />
+                <div v-if="todos.length==0 ">
+                    To create a new task, use the purple button on the bottom right!
+                </div>
+                <div v-if="todos.length>0 && filteredToDos.length==0 && (textForSearch.length>0 || !onlyCompleted || !onlyPending)" class="flex__row--center">
+                    <span class="text-body1">No documents for this filter!</span>
+                </div>
             </template>
 
             <template v-slot:item="props" >
@@ -51,10 +57,14 @@
                 <q-toggle v-model="all" label="Show all" @input="showAll"/>
                 <q-toggle v-model="onlyCompleted" label="Show only completed" @input="showOnlyCompleted" />
                 <q-toggle v-model="onlyPending" label="Show only pending"  @input="showOnlyPending" />
+                <div v-if="todos.length==0 ">
+                    To create a new task, use the purple button on the bottom right!
+                </div>
+                <div v-if="todos.length>0 && filteredToDos.length==0 && (textForSearch.length>0 || !onlyCompleted || !onlyPending)" class="flex__row--center">
+                    <span class="text-body1">No documents for this filter!</span>
+                </div>
             </template>
-            <q-tr>
-                <div id="top_element">xxx</div>
-            </q-tr>
+
             <template v-slot:body="props">
                 <q-tr :props="props">
                     <q-td key="appid" :props="props">
@@ -91,14 +101,6 @@
                 <DialogChangeStatus :todo="selectedToDo" />
             </q-card>
         </q-dialog>
-
-        <div v-if="todos.length==0 ">
-            To create a new task, use the purple button on the bottom right!
-        </div>
-
-        <div v-if="todos.length>0 && filteredToDos.length==0 && (textForSearch.length>0 || !onlyCompleted || !onlyPending)" class="flex__row--center">
-            <span class="text-body1">No documents for this filter!</span>
-        </div>
     </div>
 </template>
 
